@@ -45,12 +45,20 @@ source "googlecompute" "webapp" {
 build {
   sources = ["source.googlecompute.webapp"]
 
-  # Update system packages and fix repositories
+  # Update system packages and enable full repositories
   provisioner "shell" {
     inline = [
+      "sudo sed -i 's/^# deb http:\\/\\/archive.ubuntu.com/deb http:\\/\\/archive.ubuntu.com/g' /etc/apt/sources.list",
       "sudo apt-get update",
-      "sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y",
-      "sudo apt-get install -y software-properties-common"
+      "sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y"
+    ]
+  }
+
+  # Install Java dependencies first
+  provisioner "shell" {
+    inline = [
+      "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates-java fontconfig fonts-dejavu-core java-common",
+      "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libasound2 libfontconfig1 libfreetype6 libjpeg-turbo8 liblcms2-2 libpcsclite1"
     ]
   }
 
