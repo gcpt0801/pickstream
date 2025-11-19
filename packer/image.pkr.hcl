@@ -92,13 +92,13 @@ build {
 
   # Copy pom.xml
   provisioner "file" {
-    source      = "pom.xml"
+    source      = "../pom.xml"
     destination = "/tmp/webapp/pom.xml"
   }
 
   # Copy source files
   provisioner "file" {
-    source      = "src"
+    source      = "../src"
     destination = "/tmp/webapp"
   }
 
