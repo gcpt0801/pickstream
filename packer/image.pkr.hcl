@@ -137,7 +137,8 @@ build {
     inline = [
       "sudo apt-get clean",
       "sudo rm -rf /tmp/webapp",
-      "history -c"
+      "rm -f ~/.bash_history",
+      "sudo rm -f /root/.bash_history"
     ]
   }
 }
