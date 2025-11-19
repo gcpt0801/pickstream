@@ -1,0 +1,107 @@
+name: Destroy GCP Infrastructure
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Type "destroy" to confirm destruction of all resources'
+        required: true
+        type: string
+
+jobs:
+  destroy:
+    name: Destroy Infrastructure
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: ✅ Verify Confirmation
+      run: |
+        if [ "${{ inputs.confirmation }}" != "destroy" ]; then
+          echo "❌ Confirmation failed. You must type 'destroy' to proceed."
+          exit 1
+        fi
+        echo "✅ Confirmation received. Proceeding with destruction..."
+    
+    - name: 🔐 Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+        
+    - name: ☁️ Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+        
+    - name: 🏗️ Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 'latest'
+        terraform_wrapper: false
+        
+    - name: 🔧 Terraform Init
+      working-directory: ./terraform
+      run: terraform init -reconfigure
+      
+    - name: 📋 Show Resources to be Destroyed
+      working-directory: ./terraform
+      run: |
+        echo "========================================="
+        echo "Resources that will be destroyed:"
+        echo "========================================="
+        terraform show
+        echo ""
+        echo "========================================="
+        terraform state list || echo "No resources in state"
+        
+    - name: 🗑️ Terraform Destroy
+      working-directory: ./terraform
+      run: |
+        echo "========================================="
+        echo "🗑️  Destroying all infrastructure..."
+        echo "========================================="
+        terraform destroy -var-file="terraform.tfvars" -auto-approve
+        
+    - name: 🧹 Delete Packer Images (optional)
+      run: |
+        echo "========================================="
+        echo "Checking for Packer images to delete..."
+        echo "========================================="
+        gcloud compute images list --filter="family:random-names-webapp" --format="table(name,creationTimestamp)" || true
+        echo ""
+        echo "To delete images manually, run:"
+        echo "gcloud compute images delete IMAGE_NAME --project=gcp-terraform-demo-474514"
+        
+    - name: ✅ Destruction Complete
+      run: |
+        echo "========================================="
+        echo "🎉 Infrastructure destroyed successfully!"
+        echo "========================================="
+        echo ""
+        echo "All Terraform-managed resources have been removed."
+        echo "Note: Packer images are retained. Delete manually if needed."
+        
+    - name: 💬 Create destruction summary
+      run: |
+        cat >> $GITHUB_STEP_SUMMARY <<EOF
+        # 🗑️ Infrastructure Destroyed
+        
+        ## ✅ Destruction Details
+        - **Triggered by**: @${{ github.actor }}
+        - **Commit**: \`${{ github.sha }}\`
+        - **Branch**: \`${{ github.ref_name }}\`
+        
+        ## 🧹 Resources Removed
+        - Compute Instance
+        - Static IP Address
+        - Firewall Rules
+        - VPC Network
+        
+        ## 📝 Notes
+        - Terraform state remains in GCS bucket \`gcp-tftbk\`
+        - Packer images are retained (delete manually if needed)
+        - You can redeploy by running the "Build and Deploy to GCP" workflow
+        
+        ---
+        **Destroyed at**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+        EOF
