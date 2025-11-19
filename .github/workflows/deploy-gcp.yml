@@ -131,13 +131,21 @@ jobs:
         echo "Checking for existing resources..."
         terraform destroy -var-file="terraform.tfvars" -auto-approve || echo "No resources to destroy"
         
+    - name: 📋 Terraform Re-Plan (after destroy)
+      working-directory: ./terraform
+      run: |
+        echo "Re-planning after destroy..."
+        terraform plan \
+          -var-file="terraform.tfvars" \
+          -out=tfplan-fresh
+        
     - name: 🚀 Terraform Apply
       working-directory: ./terraform
       run: |
         echo "========================================="
         echo "Applying Terraform Configuration"
         echo "========================================="
-        terraform apply -auto-approve tfplan
+        terraform apply -auto-approve tfplan-fresh
       
     - name: 📊 Deployment Summary
       working-directory: ./terraform
