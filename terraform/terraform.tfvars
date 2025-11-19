@@ -1,4 +1,4 @@
-project_id    = "your-gcp-project-id"
+project_id    = "gcp-terraform-demo-474514"
 region        = "us-central1"
 zone          = "us-central1-a"
 instance_name = "random-names-webapp-instance"
