@@ -114,8 +114,8 @@ build {
     inline = [
       "cd /tmp/webapp",
       "mvn clean package",
-      "sudo cp target/random-names.war /var/lib/tomcat9/webapps/",
-      "sudo chown tomcat:tomcat /var/lib/tomcat9/webapps/random-names.war"
+      "sudo cp target/pickstream.war /var/lib/tomcat9/webapps/",
+      "sudo chown tomcat:tomcat /var/lib/tomcat9/webapps/pickstream.war"
     ]
   }
 
