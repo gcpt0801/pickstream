@@ -66,8 +66,7 @@ public class RandomNameServlet extends HttpServlet {
         String newName = request.getParameter("name");
         
         if (newName == null || newName.trim().isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write("{\"error\":\"Name cannot be empty\"}");
+            response.getWriter().write("{\"success\":false,\"message\":\"Name cannot be empty\"}");
             return;
         }
         
