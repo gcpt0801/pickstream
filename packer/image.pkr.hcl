@@ -53,11 +53,12 @@ build {
     ]
   }
 
-  # Install Java 11
+  # Install Java 17 (better support on Ubuntu 22.04)
   provisioner "shell" {
     inline = [
-      "sudo apt-get install -y openjdk-11-jdk",
-      "java -version"
+      "sudo apt-get install -y openjdk-17-jdk",
+      "java -version",
+      "sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java"
     ]
   }
 
