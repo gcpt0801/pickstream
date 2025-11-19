@@ -32,6 +32,7 @@ buildNumber.properties
 # Packer
 packer_cache/
 *.box
+!packer/variables.pkrvars.hcl
 packer/variables.pkrvars.hcl
 
 # OS
