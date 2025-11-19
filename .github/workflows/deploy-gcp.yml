@@ -120,6 +120,44 @@ jobs:
         echo "========================================="
         terraform destroy -var-file="terraform.tfvars" -auto-approve
         
+    - name: 🧹 Force Cleanup Orphaned Resources
+      run: |
+        echo "========================================="
+        echo "Cleaning up any orphaned GCP resources..."
+        echo "========================================="
+        
+        # Delete compute instance (if exists)
+        gcloud compute instances delete random-names-webapp-instance \
+          --project=gcp-terraform-demo-474514 \
+          --zone=us-central1-a \
+          --quiet 2>/dev/null || echo "✓ Instance already deleted"
+        
+        # Delete firewall rules
+        gcloud compute firewall-rules delete allow-ssh \
+          --project=gcp-terraform-demo-474514 \
+          --quiet 2>/dev/null || echo "✓ SSH firewall already deleted"
+        
+        gcloud compute firewall-rules delete allow-http \
+          --project=gcp-terraform-demo-474514 \
+          --quiet 2>/dev/null || echo "✓ HTTP firewall already deleted"
+        
+        gcloud compute firewall-rules delete allow-tomcat \
+          --project=gcp-terraform-demo-474514 \
+          --quiet 2>/dev/null || echo "✓ Tomcat firewall already deleted"
+        
+        # Delete static IP
+        gcloud compute addresses delete random-names-webapp-instance-static-ip \
+          --project=gcp-terraform-demo-474514 \
+          --region=us-central1 \
+          --quiet 2>/dev/null || echo "✓ Static IP already deleted"
+        
+        # Delete VPC network (must be last)
+        gcloud compute networks delete webapp-network \
+          --project=gcp-terraform-demo-474514 \
+          --quiet 2>/dev/null || echo "✓ Network already deleted"
+        
+        echo "Orphaned resource cleanup complete!"
+        
     - name: 📋 Terraform Plan
       working-directory: ./terraform
       run: |
