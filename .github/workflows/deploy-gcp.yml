@@ -61,7 +61,24 @@ jobs:
           -Dsonar.projectKey=gcpt0801_random-names-webapp \
           -Dsonar.organization=gcpt0801 \
           -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=$SONAR_TOKEN    # ===== GCP AUTHENTICATION =====
+          -Dsonar.login=$SONAR_TOKEN
+          
+    # ===== SECURITY SCANNING =====
+    - name: 🛡️ Snyk Security Scan
+      uses: snyk/actions/maven@master
+      continue-on-error: true
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --severity-threshold=high
+        
+    - name: 📊 Upload Snyk Results
+      if: always()
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: snyk.sarif
+        
+    # ===== GCP AUTHENTICATION =====
     - name: 🔐 Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
       with:
