@@ -52,7 +52,7 @@ jobs:
         echo "Running SonarCloud Analysis"
         echo "========================================="
         mvn sonar:sonar \
-          -Dsonar.projectKey=gcpt0801_random-names-webapp \
+          -Dsonar.projectKey=gcpt0801_pickstream \
           -Dsonar.organization=gcpt0801 \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.login=$SONAR_TOKEN

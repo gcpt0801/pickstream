@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
     bucket = "gcp-tftbk"
-    prefix = "random-names-webapp/terraform/state"
+    prefix = "pickstream/terraform/state"
   }
 }

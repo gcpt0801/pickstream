@@ -1,5 +1,5 @@
 project_id    = "gcp-terraform-demo-474514"
 region        = "us-central1"
 zone          = "us-central1-a"
-instance_name = "random-names-webapp-instance"
+instance_name = "pickstream-instance"
 machine_type  = "e2-medium"

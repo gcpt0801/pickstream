@@ -16,9 +16,9 @@ variable "zone" {
 }
 
 variable "instance_name" {
-  description = "Name of the compute instance"
+  description = "The name of the compute instance"
   type        = string
-  default     = "random-names-webapp-instance"
+  default     = "pickstream-instance"
 }
 
 variable "machine_type" {

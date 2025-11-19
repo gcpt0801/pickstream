@@ -27,7 +27,7 @@ variable "source_image_family" {
 variable "image_name" {
   type        = string
   description = "Name of the custom image"
-  default     = "random-names-webapp"
+  default     = "pickstream"
 }
 
 source "googlecompute" "webapp" {
