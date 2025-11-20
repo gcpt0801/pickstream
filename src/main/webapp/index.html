@@ -151,7 +151,7 @@
             nameDisplay.textContent = 'Loading...';
             
             try {
-                const response = await fetch('/random-names/api/random-name');
+                const response = await fetch('/pickstream/api/random-name');
                 
                 if (!response.ok) {
                     throw new Error('Failed to fetch name');
@@ -185,7 +185,7 @@
                 const formData = new URLSearchParams();
                 formData.append('name', name);
                 
-                const response = await fetch('/random-names/api/random-name', {
+                const response = await fetch('/pickstream/api/random-name', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',

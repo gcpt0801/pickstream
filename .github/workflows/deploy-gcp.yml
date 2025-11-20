@@ -149,7 +149,7 @@ jobs:
         echo "========================================="
         
         # Delete compute instance (if exists)
-        gcloud compute instances delete random-names-webapp-instance \
+        gcloud compute instances delete pickstream-instance \
           --project=gcp-terraform-demo-474514 \
           --zone=us-central1-a \
           --quiet 2>/dev/null || echo "✓ Instance already deleted"
@@ -168,7 +168,7 @@ jobs:
           --quiet 2>/dev/null || echo "✓ Tomcat firewall already deleted"
         
         # Delete static IP
-        gcloud compute addresses delete random-names-webapp-instance-static-ip \
+        gcloud compute addresses delete pickstream-instance-static-ip \
           --project=gcp-terraform-demo-474514 \
           --region=us-central1 \
           --quiet 2>/dev/null || echo "✓ Static IP already deleted"

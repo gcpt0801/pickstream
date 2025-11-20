@@ -27,11 +27,11 @@ jobs:
     - name: Upload WAR artifact
       uses: actions/upload-artifact@v4
       with:
-        name: random-names-war
-        path: target/random-names.war
+        name: pickstream-war
+        path: target/pickstream.war
         retention-days: 7
         
     - name: Display build info
       run: |
         echo "Build completed successfully"
-        ls -lh target/random-names.war
+        ls -lh target/pickstream.war

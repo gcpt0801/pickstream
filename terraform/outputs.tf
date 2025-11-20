@@ -10,7 +10,7 @@ output "instance_external_ip" {
 
 output "webapp_url" {
   description = "URL to access the web application"
-  value       = "http://${google_compute_address.webapp_static_ip.address}:8080/random-names"
+  value       = "http://${google_compute_address.webapp_static_ip.address}:8080/pickstream"
 }
 
 output "instance_zone" {

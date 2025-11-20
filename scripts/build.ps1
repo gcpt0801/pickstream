@@ -42,7 +42,7 @@ Write-Host ""
 Write-Host "Building application..." -ForegroundColor Yellow
 mvn package
 
-$warFile = "target\random-names.war"
+$warFile = "target\pickstream.war"
 if (Test-Path $warFile) {
     Write-Host ""
     Write-Host "=========================================" -ForegroundColor Green

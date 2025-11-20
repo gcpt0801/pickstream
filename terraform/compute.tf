@@ -99,6 +99,6 @@ resource "google_compute_instance" "webapp_instance" {
 
   labels = {
     environment = "production"
-    app         = "random-names-webapp"
+    app         = "pickstream"
   }
 }

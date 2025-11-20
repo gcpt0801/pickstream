@@ -69,7 +69,7 @@ jobs:
         echo "========================================="
         
         # Delete compute instance
-        gcloud compute instances delete random-names-webapp-instance \
+        gcloud compute instances delete pickstream-instance \
           --project=gcp-terraform-demo-474514 \
           --zone=us-central1-a \
           --quiet 2>/dev/null || echo "✓ Instance already deleted"
@@ -88,7 +88,7 @@ jobs:
           --quiet 2>/dev/null || echo "✓ Tomcat firewall already deleted"
         
         # Delete static IP
-        gcloud compute addresses delete random-names-webapp-instance-static-ip \
+        gcloud compute addresses delete pickstream-instance-static-ip \
           --project=gcp-terraform-demo-474514 \
           --region=us-central1 \
           --quiet 2>/dev/null || echo "✓ Static IP already deleted"
@@ -111,7 +111,7 @@ jobs:
         echo "========================================="
         echo "Checking for Packer images to delete..."
         echo "========================================="
-        gcloud compute images list --filter="family:random-names-webapp" --format="table(name,creationTimestamp)" || true
+        gcloud compute images list --filter="family:pickstream" --format="table(name,creationTimestamp)" || true
         echo ""
         echo "To delete images manually, run:"
         echo "gcloud compute images delete IMAGE_NAME --project=gcp-terraform-demo-474514"

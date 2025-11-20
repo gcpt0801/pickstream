@@ -20,7 +20,7 @@ jobs:
       run: |
         # Keep only the 3 most recent images
         gcloud compute images list \
-          --filter="family:random-names-webapp" \
+          --filter="family:pickstream" \
           --sort-by=~creationTimestamp \
           --format="value(name)" \
           | tail -n +4 \
@@ -29,4 +29,4 @@ jobs:
     - name: List remaining images
       run: |
         echo "Remaining images:"
-        gcloud compute images list --filter="family:random-names-webapp"
+        gcloud compute images list --filter="family:pickstream"

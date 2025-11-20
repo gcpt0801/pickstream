@@ -36,13 +36,13 @@ echo ""
 echo "Building application..."
 mvn package
 
-if [ -f "target/random-names.war" ]; then
+if [ -f "target/pickstream.war" ]; then
     echo ""
     echo "========================================="
     echo "Build successful!"
-    echo "WAR file location: target/random-names.war"
+    echo "WAR file location: target/pickstream.war"
     echo "========================================="
-    ls -lh target/random-names.war
+    ls -lh target/pickstream.war
 else
     echo ""
     echo "========================================="

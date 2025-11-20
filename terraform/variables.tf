@@ -30,7 +30,7 @@ variable "machine_type" {
 variable "image_family" {
   description = "Custom image family created by Packer"
   type        = string
-  default     = "random-names-webapp"
+  default     = "pickstream"
 }
 
 variable "network_name" {
